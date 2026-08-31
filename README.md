@@ -161,15 +161,36 @@ When the file gets too big for the quick setup — or you want lots of projects
 at once — the same log can live on your own computer instead, where it never
 gets re-sent.
 
-1. Download this repository: green **Code** button above → **Download ZIP**,
-   then unzip it anywhere
-2. Run `bijalog_setup.bat`. It checks you have Python, asks where you want your
-   folder, and sets everything up
-3. Set your name: `setx BIJALOG_APPROVER "yourname"`, then open a new command
-   prompt
-4. Optional but recommended: run `test_bijalog.bat` once. It checks the install
-   end to end in a scratch folder and prints a PASS/FAIL verdict — if anything
-   fails, send me the verdict block and I'll know exactly where it broke
+**1. Download it.** Green **Code** button above → **Download ZIP**.
+
+**2. Unblock it before you unzip.** Right-click the downloaded file →
+**Properties** → tick **Unblock** at the bottom → OK. Windows flags anything
+that came from the internet, and this clears the whole set in one go.
+
+![The Unblock tick box in the zip file's Properties](docs/unblock.png)
+
+**3. Extract it.** Right-click → **Extract All**. Don't run things from inside
+the zip preview window — Windows copies them off somewhere on their own and it
+fails confusingly. GitHub nests the folder, so go one level in afterwards.
+
+**4. Run `bijalog_setup.bat`.** A window opens. It finds Python, or offers to
+install it for you; asks where your files should live; and asks what name
+should go on the decisions you approve.
+
+![The Bijalog Setup window](docs/setup-window.png)
+
+If Windows warns about an unknown publisher, click **Run**. Bijalog does not
+need administrator rights and should not be given them.
+
+**5. Click Set up Bijalog.** It creates your folders, saves your settings, and
+runs eight checks to prove the install works.
+
+![All eight checks passed](docs/checks-passed.png)
+
+If a check fails, copy that box and send it to me — it says exactly where it
+broke.
+
+Once it's set up, these are the four things it does:
 
 ```text
 python bijalog.py add <project> "<decision>" --topic <topic> [--approved]
