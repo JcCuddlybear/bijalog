@@ -19,10 +19,19 @@ old one stays.
 
 **Not for** lists or notes. Just decisions you'll want to remember.
 
-## You need a PC and
+## What you need
 
-- Claude for desktop — <https://claude.ai/download>
-- Google Drive for desktop —
+There are two ways to run this. Start with the first.
+
+**The quick way** — a Claude account with Google Drive connected. That's it.
+Works in a browser, on any computer. Nothing to install.
+
+**The computer version** — Python, and Google Drive for desktop if you want
+your log synced. Windows has a setup window that does the work; on macOS and
+Linux there are wrappers in the `mac/` folder.
+
+- Claude — <https://claude.ai>
+- Google Drive for desktop (computer version only) —
   <https://support.google.com/drive/answer/10838124>
 
 ## Setting it up (the quick way — no install)
