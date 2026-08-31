@@ -1,0 +1,7 @@
+# Line endings matter here: a CRLF shebang line breaks .sh/.command on Mac,
+# and some Windows tools dislike LF-only .bat files. Pin both directions.
+*.py       text eol=lf
+*.sh       text eol=lf
+*.command  text eol=lf
+*.md       text eol=lf
+*.bat      text eol=crlf
