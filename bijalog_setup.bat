@@ -2,9 +2,27 @@
 setlocal enabledelayedexpansion
 title Bijalog Setup
 
-echo ============================================
+rem Try the setup window first. If PowerShell is blocked by policy, or the
+rem window cannot open for any reason, fall through to the text-mode setup
+rem below so nobody is left stuck. The window writes a flag file the moment
+rem it appears; that flag is how we know it actually ran.
+
+del "%TEMP%\bijalog_gui.flag" >nul 2>&1
+where powershell >nul 2>&1
+if not errorlevel 1 (
+    echo Opening the setup window...
+    powershell -NoProfile -ExecutionPolicy Bypass -STA -File "%~dp0bijalog_setup.ps1" >nul 2>&1
+    if exist "%TEMP%\bijalog_gui.flag" (
+        del "%TEMP%\bijalog_gui.flag" >nul 2>&1
+        exit /b 0
+    )
+    echo The setup window could not open. Carrying on in this window instead.
+    echo.
+)
+
+echo ==============================================
 echo  Bijalog Setup
-echo ============================================
+echo ==============================================
 echo.
 
 rem --- Check Python is installed and reachable ---
@@ -70,16 +88,28 @@ setx BIJALOG_ROOT "%BIJALOG_DIR%\projects" >nul
 
 echo.
 echo BIJALOG_ROOT has been set to:
-echo   %BIJALOG_DIR%\projects
+echo    %BIJALOG_DIR%\projects
 echo.
-echo This is a permanent setting for your Windows user account,
-echo so bijalog.bat will find the right folder automatically from
-echo any new Command Prompt window from now on (existing open
-echo windows won't see it until reopened).
+
+rem --- Approver name: goes on every decision you approve ---
+echo Last thing: what name should go on the decisions you
+echo approve? Press Enter to use %USERNAME%.
 echo.
-echo ============================================
+set "BIJALOG_NAME="
+set /p "BIJALOG_NAME=Your name: "
+if "%BIJALOG_NAME%"=="" set "BIJALOG_NAME=%USERNAME%"
+setx BIJALOG_APPROVER "%BIJALOG_NAME%" >nul
+echo.
+echo Your approvals will be stamped: %BIJALOG_NAME%
+echo.
+echo Both settings are permanent for your Windows user account,
+echo so Bijalog will find the right folder automatically from any
+echo new Command Prompt window from now on (windows that are
+echo already open won't see them until reopened).
+echo.
+echo ==============================================
 echo  Setup complete.
-echo  Run bijalog.bat from this folder to get started.
-echo ============================================
+echo  Run test_bijalog.bat to check it all works.
+echo ==============================================
 echo.
 pause
